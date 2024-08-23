@@ -54,13 +54,9 @@ jobs:
       run: |
         cd .\zip\
         7z a -r -tzip ..\${{ github.event.repository.name }}_${{ github.event.inputs.version }}.zip .\*
-
-    - uses: ncipollo/release-action@v1
+               
+    - name: Upload build outputs
+      uses: actions/upload-artifact@v3
       with:
-        artifacts: "${{ github.event.repository.name }}_${{ github.event.inputs.version }}.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.event.inputs.version }}
-        name: "${{ github.event.inputs.version }}"
-        draft: true
-        generateReleaseNotes: true
-        artifactErrorsFailBuild: true
+        name: dist
+        path: ${{ github.event.repository.name }}_${{ github.event.inputs.version }}.zip
